@@ -25,7 +25,8 @@ export function LeftContent(props: LeftContentProps) {
     useEffect(() => {
         setPage(1);
         loadPage(page);
-    }, [cities]) // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [cities]) 
 
     function loadCityResults() {
         setIsLoading(true);
