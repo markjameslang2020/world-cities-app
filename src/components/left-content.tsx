@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { City } from "../models/city";
 import { CityList } from "./city-list";
 
@@ -15,6 +15,7 @@ export function LeftContent(props: LeftContentProps) {
     const [isLoadMoreVisible, setIsLoadMoreVisible] = useState<boolean>(true);
 
     let amount: number = props.amount;
+    let maxPages: number = 0;
 
     // load inital cities results
     useEffect(() => {
@@ -28,10 +29,19 @@ export function LeftContent(props: LeftContentProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cities]) 
 
-    function loadCityResults() {
+
+    //cache total pages
+    useMemo(() => {
+        maxPages =  Math.ceil(cities.length / amount);
+    }, [cities]);
+
+    function loadCityResults(): void {
         setIsLoading(true);
         fetch(dataUrl, {redirect: "follow"})
-        .then((response) => response.json())
+        .catch((e) => {
+            alert('Error data could not be loaded');
+        })
+        .then((response: any) => response.json())
         .then((response: any) => {
             setCities(response as City[]);
             setIsLoading(false);
@@ -39,7 +49,9 @@ export function LeftContent(props: LeftContentProps) {
     }
 
     function getResultsByPage(results:City[], page: number=1, amount: number=10): City[] {
-        return results.slice(((page - 1) * amount), ((page) * amount));
+        let startOffset: number = (page - 1) * amount;
+        let endOffset: number = page * amount;
+        return results.slice(startOffset, endOffset);
     }
 
     function loadPage(page:number=1): void {
@@ -48,19 +60,15 @@ export function LeftContent(props: LeftContentProps) {
         setPaginatedCities(prevState => [...prevState, ...paginatedResults]);
         setIsLoading(false);
 
-        //set load more visible to false it exceed max pages
-        if(page === getMaxPages()) {
+        //set load more visible to false it exceeds max pages
+        if(page === maxPages) {
             setIsLoadMoreVisible(false);
-        } 
+        }
     }
 
     function handleLoadMore(): void {
         setPage(prevState => prevState + 1);
         loadPage(page);
-    }
-
-    function getMaxPages(): number {
-        return Math.ceil(cities.length / amount);
     }
 
     return (
