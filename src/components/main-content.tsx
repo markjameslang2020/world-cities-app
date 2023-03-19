@@ -10,11 +10,11 @@ export function MainContent() {
             <br />
             <div className='row'>
                 <div className='col'>
-                    <LeftContent amount={10}></LeftContent>
+                    <LeftContent amount={10} />
                 </div>
 
                 <div className='col'>
-                    <RightContent></RightContent>
+                    <RightContent />
                 </div>
             </div>
         </div>

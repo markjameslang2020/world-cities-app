@@ -13,11 +13,13 @@ export function CityList(props: CityListProps) {
 
     let cityItemsHTML: JSX.Element[] = cities.map((city: City) => {
         return (
-            <CityListItem key={uuidv4()} city={city}></CityListItem>
+            <CityListItem key={uuidv4()} city={city} />
         )
     })
 
     return (
+        <>
+        {cities.length > 0 ? 
         <table className='table table-striped table-bordered'>
             <thead className='thead-dark'>
                 <tr>
@@ -31,5 +33,7 @@ export function CityList(props: CityListProps) {
                 {cityItemsHTML}
             </tbody>
         </table>
+        : <p>No results could be found</p>}
+        </>
     );
 }
