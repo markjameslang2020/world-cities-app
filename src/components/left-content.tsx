@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { City } from "../models/city";
 import { CityList } from "./city-list";
 
@@ -15,7 +15,6 @@ export function LeftContent(props: LeftContentProps) {
     const [isLoadMoreVisible, setIsLoadMoreVisible] = useState<boolean>(true);
 
     let amount: number = props.amount;
-    let maxPages: number = 0;
 
     // load inital cities results
     useEffect(() => {
@@ -29,11 +28,6 @@ export function LeftContent(props: LeftContentProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cities]) 
 
-
-    //cache total pages
-    useMemo(() => {
-        maxPages =  Math.ceil(cities.length / amount);
-    }, [cities]);
 
     function loadCityResults(): void {
         setIsLoading(true);
@@ -61,14 +55,18 @@ export function LeftContent(props: LeftContentProps) {
         setIsLoading(false);
 
         //set load more visible to false it exceeds max pages
-        if(page === maxPages) {
+        if(page === getMaxPages()) {
             setIsLoadMoreVisible(false);
         }
     }
 
     function handleLoadMore(): void {
+        loadPage(page + 1);
         setPage(prevState => prevState + 1);
-        loadPage(page);
+    }
+
+    function getMaxPages(): number {
+        return Math.ceil(cities.length / amount);
     }
 
     return (

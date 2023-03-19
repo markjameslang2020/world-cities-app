@@ -1,6 +1,5 @@
 import { City } from "../models/city";
 
-import { v4 as uuidv4 } from 'uuid';
 
 export class CityListItemProps {
     city: City = new City();
@@ -9,7 +8,7 @@ export class CityListItemProps {
 export function CityListItem(props: CityListItemProps) {
     let city: City = props.city;
     return (
-    <tr key={uuidv4()}>
+    <tr key={city.geonameid}>
         <td>{ city.country }</td>
         <td>{ city.geonameid }</td>
         <td>{ city.name }</td>
