@@ -19,13 +19,13 @@ export function LeftContent(props: LeftContentProps) {
     // load inital cities results
     useEffect(() => {
         loadCityResults();
-    }, [])        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     // set back to first page when cities is updated
     useEffect(() => {
         setPage(1);
         loadPage(page);
-    }, [cities])
+    }, [cities]) // eslint-disable-next-line react-hooks/exhaustive-deps
 
     function loadCityResults() {
         setIsLoading(true);
