@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { act, fireEvent, render, screen, within,renderHook, waitFor } from '@testing-library/react';
-import { CityListItem } from './city-list-item';
+import { CityListItem } from './CityListItem';
 import { City } from '../models/city';
 
 

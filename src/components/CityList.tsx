@@ -1,5 +1,5 @@
 import { City } from "../models/city";
-import { CityListItem } from "./city-list-item";
+import { CityListItem } from "./CityListItem";
 
 
 class CityListProps {

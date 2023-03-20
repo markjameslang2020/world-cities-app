@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { act, fireEvent, render, screen, within,renderHook, waitFor } from '@testing-library/react';
-import { CityList } from './city-list';
+import { CityList } from './CityList';
 
 
 test('test headers are present', async() => {

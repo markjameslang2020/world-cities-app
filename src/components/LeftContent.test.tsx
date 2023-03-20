@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, fireEvent, render, screen, within,renderHook, waitFor } from '@testing-library/react';
-import { LeftContent, LeftContentProps } from './left-content';
+import { LeftContent, LeftContentProps } from './LeftContent';
 
 import * as fetch from 'jest-fetch-mock';
 

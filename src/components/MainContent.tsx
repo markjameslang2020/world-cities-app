@@ -1,5 +1,5 @@
-import { LeftContent } from "./left-content";
-import { RightContent } from "./right-content";
+import { LeftContent } from "./LeftContent";
+import { RightContent } from "./RightContent";
 
 export function MainContent() {
     return (

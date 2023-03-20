@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { RightContent } from './right-content';
+import { RightContent } from './RightContent';
 
 test('test right content has text', () => {
   render(<RightContent />);
