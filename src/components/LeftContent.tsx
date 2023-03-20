@@ -10,9 +10,8 @@ export function LeftContent(props: LeftContentProps) {
 
     const [cities, setCities] = useState<City[]>([]);
     const [paginatedCities, setPaginatedCities] = useState<City[]>([]);
-    const [page, setPage] = useState<number>(1);
+    const [nextPage, setNextPage] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isLoadMoreVisible, setIsLoadMoreVisible] = useState<boolean>(true);
 
     let amount: number = props.amount;
 
@@ -36,27 +35,23 @@ export function LeftContent(props: LeftContentProps) {
         .then((response: any) => {
             setCities(response as City[]);
             // load the inital first page
-            setPage(1);
-            loadPage(response as City[], page, amount);
+            setNextPage(1);
+            loadNextPage(response as City[], nextPage, amount);
+            setNextPage(prevState => prevState + 1);
             setIsLoading(false);
         })
     }
 
     function handleLoadMore(): void {
-        loadPage(cities, page + 1, amount);
-        setPage(prevState => prevState + 1);
+        loadNextPage(cities, nextPage, amount);
+        setNextPage(prevState => prevState + 1);
     }
 
-    function loadPage(results: City[], page:number=1, amount: number=10): void {
+    function loadNextPage(results: City[], nextPage:number=1, amount: number=10): void {
         setIsLoading(true);
-        let paginatedResults: City[] = getResultsByPage(results, page, amount);
+        let paginatedResults: City[] = getResultsByPage(results, nextPage, amount);
         setPaginatedCities(prevState => [...prevState, ...paginatedResults]);
         setIsLoading(false);
-
-        //set load more visible to false it exceeds max pages
-        if(page === maxPages) {
-            setIsLoadMoreVisible(false);
-        }
     }
 
 
@@ -69,7 +64,7 @@ export function LeftContent(props: LeftContentProps) {
     return (
         <>
         <CityList cities={paginatedCities}></CityList>
-        {isLoadMoreVisible && <button className='btn btn-primary' disabled={isLoading} onClick={handleLoadMore}>
+        {(nextPage - 1) !== maxPages && <button className='btn btn-primary' disabled={isLoading} onClick={handleLoadMore}>
             Load More
         </button>}
         </>
